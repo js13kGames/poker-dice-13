@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="viewport" content="user-scalable=no, width=device-width" />
+<title>Poker Dice 13</title>
+<link rel="stylesheet" type="text/css" href="style.css" />
+<link rel="stylesheet" type="text/css" href="style-m.css" media="all and (min-height: 600px)" />
+<link rel="stylesheet" type="text/css" href="style-l.css" media="all and (min-height: 910px)" />
+<script type="text/javascript" src="script.js"></script>
+</head>
+<body>
+<canvas id="back" width="320" height="320"></canvas>
+<div id="board">
+	<div id="score">
+		<div id="head">
+			<div id="logo" class="sound"><span class="d1"></span><span></span><span class="d2"></span><span></span><span class="d3"></span></div>
+			<a href="#" id="roll" class="button">Roll</a>
+			<h1>Poker Dice 13</h1>
+		</div>
+		<dl id="computer"><dt><span></span><span></span></dt><dd></dd><dd></dd><dd></dd><dd></dd><dd></dd><dd></dd><dd></dd><dd></dd><dd></dd><dd></dd><dd></dd><dd></dd><dd></dd><dt>0</dt></dl>
+		<dl><dt></dt><dd>Ones</dd><dd>Twos</dd><dd>Threes</dd><dd>Fours</dd><dd>Fives</dd><dd>Sixes</dd><dd>3 of a kind</dd><dd>4 of a kind</dd><dd>Full House</dd><dd>Small Straight</dd><dd>Large Straight</dd><dd>5 of a kind</dd><dd>Chance</dd><dt></dt></dl>
+		<dl id="player"><dt><span></span><span></span></dt><dd></dd><dd></dd><dd></dd><dd></dd><dd></dd><dd>30</dd><dd></dd><dd></dd><dd></dd><dd></dd><dd></dd><dd></dd><dd></dd><dt>0</dt></dl>
+	</div>
+	<div id="dices">
+		<canvas class="dice x0 y0"></canvas>
+		<canvas class="dice x3 y0"></canvas>
+		<canvas class="dice x1 y4"></canvas>
+		<canvas class="dice x4 y3"></canvas>
+		<canvas class="dice x1 y1"></canvas>
+	</div>
+	<ol id="help">
+		<li class="help1">
+			<div class="arrow right"></div>
+			<div class="help">1. Roll five dice to complete all poker combinations in 13 rounds.</div>
+		</li>
+		<li class="help2">
+			<div class="arrow"></div>
+			<div class="help">2. You can hold dice and re-roll two times per round.</div>
+		</li>
+		<li class="help3">
+			<div class="arrow right"></div>
+			<div class="help">3. Select the best scores and try to beat the computer.</div>
+		</li>
+		<li class="help4">
+			<div class="help"><b>Click/Tap to start!</b></div>
+		</li>
+	</ol>
+	<div id="popup" class="hide">
+		<div>
+			<h2></h2>
+			<p>
+				Wins: <span></span><br />
+				Played: <span></span><br />
+				5 of a kind: <span></span><br />
+				Best score: <span></span>
+			</p>
+			<b>Click/Tap to restart!</b>
+		</div>
+	</div>
+</div>
+<canvas id="flakes"></canvas>
+</body>
+</html>
