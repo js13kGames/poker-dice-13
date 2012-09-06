@@ -219,7 +219,7 @@ Logic.prototype.winner = function() {
 
 /**
  * Get acting player
- * @returns
+ * @returns {Object}
  */
 Logic.prototype.player = function() {
 	return this.players[this.active];
@@ -582,14 +582,19 @@ Flakes.prototype.anim = function() {
 function Sound() {
 	this.mute = false;
 	this.elements = [];
-	var volume = 0.7;
-	for (var i=0; i<5; i++) {
-		var a = new Audio();
-		a.src = Sound.src;
-		a.volume = volume;
-		a.load();
-		this.elements.push(a);
-		volume -= 0.15;
+	if (!navigator.platform.match(/^(iPad|iPod|iPhone)$/)) {
+		var volume = 0.7;
+		try {
+			for (var i=0; i<5; i++) {
+				var a = new Audio();
+				a.src = Sound.src;
+				a.volume = volume;
+				a.load();
+				this.elements.push(a);
+				volume -= 0.15;
+			}
+		} catch(e) {
+		}
 	}
 }
 
@@ -599,10 +604,17 @@ function Sound() {
 Sound.src = "data:audio/wav;base64,UklGRjgDAABXQVZFZm10IBAAAAABAAEAQB8AAIA+AAACABAAZGF0YRQDAACCAg75kTF9Rt3YuOBg6nWtgAxRKNjzEx1h9QHO5fME/KMUKCAx/xb0JPMU9f0ELAT0AZwMAwwaB5MIqAUt+fj0lglhIbwe0AvJ9nrmYfDnB1YQxAxxAPjxJfT9+XT4Mfo7+Lz1AvwSAGAAGwAb+qn2UPuE/6kCPARY/4/6yfmz+mMAAwnBCoIDh/zX+Gj7MAU0CroJewh4AMT3EPq8/zQCTwI0AcQCTwJ4/yD/GP/c/a/7+f0YAkz/k/s1/DP+zgBLAYoAdgB6APwBcwJNABcAKwC4ARUEvgJTAgsCGgPHBH4BmP6g/cf6y/oz/ioBXgMHAkj9Hvzl/2wB7v/p/nr78/kK/uj/Hf9+/l/9N/0s/af9BgDtAuECVgAb/m79lwAyAx4Bn/9yATECWQB2/2f/yv/fAOcBIQSMA60ArQFsANP9zQDaA/MCQQEaAIP/7P9e/8n9pf6WAKEBjwNRA4T8WPnx/8YCsgHZAin/uPvk/Rn/If9N/+gAjwEDAC7/2f6//yQAWwCeAW8AoP6e/uv+8v70/ssAxwHuAND/9/1//VL+MQGmA+kBvv5n/R7/1gH5AvUCGQJbAZH/J/3O//4CMAHc/s7/UwE1AnsCrQCk/zgAuABiAjECUQDFAA0AvABrAv0B9AHGAPX9hf0MAMcBMQDv/ff92P21/ZkAGwLG/wb/zQDHAXYAff4Z/mj/PAHLAUsBcgCK/8EAhwKkAdL/wv91AYcBcgCR/33+9P8TAoYCeQEi/nf8jP0z/8YBZQL3/xj/1P4w/ln/nAFxAYL/AgDGAHX/zf9RAncCqwAUAeEByAGCAoMBUQBIAID/+wD+AlsBJwCTAIUAmwDEAA8BVgC5//QBvQLH/4v+x/7v/i0A5P/h/6QBVgCe/kn/MQAoAicClf7B/eX+n/6n/+MAKQHbANn/iv/P/hb+Sf8tAU8CPgEJ/6r+cP9t/wH/TwDaAWYBsACRAEsB+QCT/58AJwFyAHYBugEdAvsByv+E/1gA7wDKAZUCMwJVAPP/wACkAKoArgBcADYBDAHI/2oAigDQ/w==";
 
 /**
+ * Sound support test
+ */
+Sound.prototype.enabled = function() {
+	return this.elements.length > 0;
+};
+
+/**
  * Play click sound
  */
 Sound.prototype.click = function() {
-	if (!this.mute) {
+	if (!this.mute && this.enabled()) {
 		this.elements[3].play();
 	}
 };
@@ -613,7 +625,7 @@ Sound.prototype.click = function() {
  * @param num
  */
 Sound.prototype.roll = function(timeout, num) {
-	if (!this.mute) {
+	if (!this.mute && this.enabled()) {
 		$.each(this.elements, function(i, sound) {
 			if (i < num) {
 				var t = i > 0 ? Math.floor(Math.random() * 70) * i + timeout : timeout;
@@ -628,6 +640,18 @@ Sound.prototype.roll = function(timeout, num) {
  */
 function Main() {
 	this.sound = new Sound();
+	if (this.sound.enabled()) {
+		$('logo').onclick = function() {
+			if (this.className == '') {
+		 		self.sound.mute = false;
+				this.className = 'sound';
+			} else {
+		 		self.sound.mute = true;
+				this.className = '';
+			}
+		};
+		$('logo').className = 'sound';
+	}
 	this.flakes = new Flakes($('flakes'), 50);
 	this.players = [$('player'), $('computer')];
 	this.dices = [];
@@ -651,15 +675,6 @@ function Main() {
 			this.blur();
 		};
 	});
-	$('logo').onclick = function() {
-		if (this.className == '') {
-	 		self.sound.mute = false;
-			this.className = 'sound';
-		} else {
-	 		self.sound.mute = true;
-			this.className = '';
-		}
-	};
 	$('flakes').onclick = function() {
 		$('popup').className = 'hide';
 		$('help').className = 'hide';
