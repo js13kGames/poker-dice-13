@@ -72,7 +72,12 @@ body {
 	border-left: 16px solid transparent;
 	border-right: 16px solid transparent;
 	border-bottom: 16px solid #fff;
-	margin: 0 40px;
+	margin: 0 32px;
+}
+
+.down {
+	border-top: 16px solid #ddd;
+	border-bottom: none;
 }
 
 .help {
@@ -81,28 +86,28 @@ body {
 	border-radius: 10px;
 }
 
-.help1,
-.help2,
-.help3,
-.help4 {
+#help1,
+#help2,
+#help3 {
 	width: 500px;
 }
 
-.help1 {
-	margin: 100px 0 0 110px;
+#help1 {
+	margin: 100px 0 0 100px;
 }
 
-.help2 {
-	margin: 310px 0 0 10px;
+#help2 {
+	margin: 740px 0 0 10px;
 }
 
-.help3 {
-	margin: 490px 0 0 120px;
+#help3 {
+	margin: 40px 0 0 120px;
 }
 
-.help4 {
-	margin: 700px 0 0 60px;
-	text-align: center
+#help1.hide,
+#help2.hide,
+#help3.hide  {
+	margin-top: -400px;
 }
 
 a.button {

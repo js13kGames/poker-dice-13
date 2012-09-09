@@ -636,9 +636,35 @@ Sound.prototype.roll = function(timeout, num) {
 };
 
 /**
+ * Step by step tutorial
+ */
+function Help() {
+	this.step = -1;
+	this.steps = [$('help1'), $('help2'), $('help3')];
+	this.set(0);
+}
+
+/**
+ * Select tutorial 
+ * @param step
+ */
+Help.prototype.set = function(step) {
+	var result = this.step < step;
+	if (result) {
+		this.step = step;
+		$.each(this.steps, function(i) {
+			this.className = step != i ? 'hide' : '';
+		});
+	}
+	return result;
+};
+
+/**
  * Game controller
  */
 function Main() {
+	this.help = new Help();
+	this.logic = new Logic();
 	this.sound = new Sound();
 	if (this.sound.enabled()) {
 		$('logo').onclick = function() {
@@ -653,6 +679,7 @@ function Main() {
 		$('logo').className = 'sound';
 	}
 	this.flakes = new Flakes($('flakes'), 50);
+	this.flakes.hide();
 	this.players = [$('player'), $('computer')];
 	this.dices = [];
 	var self = this;
@@ -673,16 +700,16 @@ function Main() {
 				self.play();
 			}
 			this.blur();
+			self.help.set(4);
 		};
 	});
 	$('flakes').onclick = function() {
 		$('popup').className = 'hide';
-		$('help').className = 'hide';
 		self.flakes.hide();
 		self.flakes.stop();
 		self.logic = new Logic();
-		self.logic.roll();
 		self.roll(function() {
+			self.logic.roll();
 			self.paint(true);
 		});
 	};
@@ -691,6 +718,7 @@ function Main() {
 			self.roll(function() {
 				self.paint(true);
 			});
+			self.help.set(self.logic.rolls < 3 ? 1 : 2);
 		}
 		this.blur();
 		return false;

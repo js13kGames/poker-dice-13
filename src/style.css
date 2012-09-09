@@ -131,10 +131,6 @@ body {
 	float: right;
 }
 
-#help.hide li {
-	margin-top: -200px;
-}
-
 #flakes {
 	position: absolute;
 	width: 100%;
@@ -151,7 +147,13 @@ body {
 	border-left: 8px solid transparent;
 	border-right: 8px solid transparent;
 	border-bottom: 8px solid #fff;
-	margin: 0 20px;
+	margin: 0 16px;
+	float: right;
+}
+
+.down {
+	border-top: 8px solid #ddd;
+	border-bottom: none;
 }
 
 .help {
@@ -167,10 +169,9 @@ body {
 	background: -o-linear-gradient(top, #fff 80%, #ddd 100%);
 }
 
-.help1,
-.help2,
-.help3,
-.help4 {
+#help1,
+#help2,
+#help3 {
 	position: absolute;
 	width: 250px;
 	z-index: 2;
@@ -179,25 +180,22 @@ body {
 	-o-transition: margin-top .7s;
 }
 
-.help1 {
-	margin: 50px 0 0 55px;
+#help1 {
+	margin: 50px 0 0 50px;
 }
 
-.help2 {
-	margin: 155px 0 0 5px;
+#help2 {
+	margin: 370px 0 0 5px;
 }
 
-.help3 {
-	margin: 245px 0 0 60px;
+#help3 {
+	margin: 20px 0 0 60px;
 }
 
-.help4 {
-	margin: 350px 0 0 30px;
-	text-align: center
-}
-
-.right {
-	float: right;
+#help1.hide,
+#help2.hide,
+#help3.hide  {
+	margin-top: -200px;
 }
 
 h1 {
